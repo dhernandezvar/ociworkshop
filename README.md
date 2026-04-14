@@ -1,17 +1,22 @@
-# OCI Workshop Lab – Fundamentos
-🧑‍💻 Tiempo Estimado: 3 horas
+# 🧑‍💻 OCI Workshop Lab – Fundamentos (3 horas)
 
-🎯 Objetivo del laboratorio
+---
 
-En este laboratorio vas a construir una arquitectura completa en Oracle Cloud Infrastructure (OCI) paso a paso, como si estuvieras en un entorno real de trabajo.
+## 🎯 Objetivo del laboratorio
 
-No solo vas a crear recursos, sino que vas a entender:
+En este laboratorio vas a construir una arquitectura completa en **Oracle Cloud Infrastructure (OCI)** paso a paso, como si estuvieras trabajando en un entorno real.
 
-qué estás haciendo
-por qué lo estás haciendo
-qué resultado debes ver en cada paso
+A lo largo del ejercicio vas a entender:
 
-🧱 Arquitectura que vas a construir
+- **qué estás haciendo**
+- **por qué lo estás haciendo**
+- **qué deberías ver en cada paso**
+
+---
+
+## 🧱 Arquitectura que vas a construir
+
+```
 Internet
    │
    ▼
@@ -24,280 +29,147 @@ VM (Apache Web Server)
 VCN (10.0.0.0/16)
  ├── Public Subnet
  └── Private Subnet
- 
-⚠️ REGLA MÁS IMPORTANTE DEL LAB
+```
 
-Antes de hacer cualquier acción, revisa esto:
-👉 En la parte superior de la consola debe decir:
+---
+
+## ⚠️ REGLA MÁS IMPORTANTE DEL LAB
+
+Antes de crear cualquier recurso, revisa SIEMPRE esto en la parte superior:
+
+```
 Workshop-OCI / TuNombre-OCI
+```
 
-🔴 Si esto está mal, TODO lo que crees quedará en el lugar incorrecto.
+🔴 Si el compartment es incorrecto, todos tus recursos quedarán mal ubicados.
 
+---
 
-1️⃣ IAM – Entendiendo quién puede acceder
-🎯 ¿Qué vamos a hacer aquí?
+# 1️⃣ IAM – Entendiendo quién tiene acceso
 
-Antes de crear recursos, necesitamos entender quién tiene acceso al entorno.
+## 🎯 ¿Qué vamos a hacer?
 
-Aquí no vas a crear nada — solo observar.
+Explorar cómo OCI gestiona usuarios, grupos y permisos.
 
-🧭 Paso 1: Entrar al Identity Domain
-En la esquina superior izquierda, haz clic en el menú ☰
-En el menú que aparece, busca la sección:
-👉 Identity & Security
-Da clic en:
-👉 Domains
+## 🧭 Pasos
 
-Ahora verás una lista de dominios.
+1. Menú ☰ → Identity & Security → Domains  
+2. Click en Default Domain  
+3. Ir a User Management → Users  
+4. Revisar lista  
+5. Ir a Groups  
+6. Revisar grupos  
 
-Haz clic en:
-👉 Default Domain
-👤 Paso 2: Ver usuarios
-En el menú izquierdo del dominio, busca:
-👉 User Management
-Da clic en:
-👉 Users
+---
 
-🔍 Aquí estás viendo:
+# 2️⃣ Crear tu Compartment
 
-Todos los usuarios que pueden entrar a OCI
-Tu propio usuario
+## 🎯 ¿Qué vamos a hacer?
 
-👉 Busca tu nombre en la lista.
+Crear tu propio espacio de trabajo aislado.
 
-👥 Paso 3: Ver grupos
-En el mismo menú izquierdo:
-👉 Da clic en Groups
+## 🧭 Pasos
 
-🔍 Aquí estás viendo:
+1. Menú ☰ → Identity & Security → Compartments  
+2. Click Create Compartment  
+3. Name: TuNombre-OCI  
+4. Parent: Workshop-OCI  
+5. Create  
 
-Grupos de usuarios
-Cómo se organizan los permisos
-🔗 Paso 4: Ver a qué grupo perteneces
-Regresa a: Users
-Haz clic en tu usuario
-Busca la sección:
-👉 Groups
+---
 
-👉 Aquí puedes ver qué permisos tienes indirectamente.
+# 3️⃣ Red – Crear la VCN
 
-2️⃣ Crear tu espacio de trabajo (Compartment)
-🎯 ¿Qué vamos a hacer?
+## 🎯 ¿Qué vamos a hacer?
 
-Crear tu propio “espacio aislado” donde trabajarás todo el laboratorio.
+Crear la red base donde vivirán todos los recursos.
 
-🧭 Paso a paso
-Abre el menú ☰
-Da clic en:
-👉 Identity & Security → Compartments
+## 🧭 Pasos
 
-Verás la lista de compartments existentes.
+1. Menú ☰ → Networking → Virtual Cloud Networks  
+2. Click Actions → Start VCN Wizard  
+3. Seleccionar “VCN with Internet Connectivity”  
+4. Click Start  
 
-Haz clic en el botón:
-👉 Create Compartment
-📝 Completa la información
-Name: TuNombre-OCI
-Parent Compartment: selecciona Workshop-OCI
+### Configuración
 
-👉 Este punto es clave: asegúrate de NO dejar Root.
+- Name: VCN-TuNombre  
+- CIDR: 10.0.0.0/16  
 
-Haz clic en:
-👉 Create
-✅ Qué debes ver
+Click Create  
 
-Tu estructura debe quedar así:
+---
 
-Root
- └── Workshop-OCI
-      └── TuNombre-OCI
-3️⃣ Seguridad – Cómo se protege el acceso
-🎯 ¿Qué vamos a hacer?
+# 4️⃣ Seguridad de red
 
-Entender cómo OCI protege el acceso:
+## 🎯 ¿Qué vamos a hacer?
 
-contraseñas
-autenticación multifactor
-🔑 Password Policy
-Regresa a:
-👉 Identity & Security → Domains
-Abre: Default Domain
-En el menú izquierdo:
-👉 Domain Policies → Password Policy
+Controlar acceso a la VM.
 
-🔍 Observa:
+## 🔐 ACL (SSH)
 
-longitud mínima
-complejidad
-expiración
-🔐 MFA (Dominio)
+- Source: TU_IP/32  
+- Port: 22  
 
-👉 En el menú izquierdo:
-👉 Authentication
+## 🔐 NSG
 
-👤 MFA (Tu usuario)
-Menú ☰
-👉 Identity & Security → My Profile
-Da clic en:
-👉 Security
-4️⃣ Cost Analysis
-🎯 ¿Qué vamos a hacer?
+- NSG-VM-Web → HTTP desde LB  
+- NSG-LB → HTTP público  
 
-Ver cómo OCI muestra el consumo de recursos.
+---
 
-🧭 Paso a paso
-Menú ☰
-👉 Billing & Cost Management → Cost Analysis
-Configura
-Compartment: Workshop-OCI
-Periodo: This Month
-🔍 Qué observar
+# 5️⃣ VM – Crear servidor
 
-Cambia las vistas y analiza:
+## 🎯 ¿Qué vamos a hacer?
 
-qué servicios aparecen
-si hay consumo
-5️⃣ Red – Crear la VCN
-🎯 ¿Qué vamos a hacer?
+Crear una VM Linux y conectarnos a ella.
 
-Crear la red donde vivirán todos los recursos.
+## 🧭 Pasos
 
-🔴 Paso 1: Verificar compartment
+1. Menú ☰ → Compute → Instances  
+2. Click Create Instance  
 
-👉 Debe decir:
+## 🔐 SSH
 
-Workshop-OCI / TuNombre-OCI
-🧭 Paso 2: Ir a networking
-Menú ☰
-👉 Networking → Virtual Cloud Networks
-🧭 Paso 3: Iniciar wizard
-Busca el botón:
-👉 Actions
-Da clic
-Selecciona:
-👉 Start VCN Wizard
-🧭 Paso 4: Seleccionar tipo
+Generate a key pair for me  
 
-Selecciona:
+Descargar llave privada  
 
-👉 VCN with Internet Connectivity
+## Conexión
 
-👉 Da clic en Start
-
-🧭 Paso 5: Configurar
-Name: VCN-TuNombre
-CIDR: 10.0.0.0/16
-
-👉 Deja todo lo demás por defecto
-
-🧭 Paso 6: Crear
-
-👉 Haz clic en Create
-
-⏳ Espera a que termine
-
-🔐 6️⃣ Seguridad de red
-🎯 ¿Qué vamos a hacer?
-
-Configurar quién puede entrar a la VM.
-
-🔑 ACL (Security List) – SSH
-
-👉 Permitir acceso solo desde tu PC
-
-Paso a paso
-Entra a tu VCN
-Da clic en:
-👉 Subnets
-Selecciona Public Subnet
-Baja hasta:
-👉 Security Lists
-Da clic en la lista
-Da clic en:
-👉 Add Ingress Rule
-Configura
-Source: tu IP /32
-Port: 22
-🌐 NSG – HTTP
-
-👉 Controlar acceso web
-
-Crear NSG-VM-Web
-VCN → Network Security Groups
-Create
-Regla
-Source: NSG-LB
-Port: 80
-Crear NSG-LB
-Source: 0.0.0.0/0
-Port: 80
-7️⃣ VM – Crear servidor
-🎯 ¿Qué vamos a hacer?
-
-Crear una VM y conectarnos a ella.
-
-🧭 Paso a paso
-Menú ☰
-👉 Compute → Instances
-👉 Create Instance
-🔐 Paso crítico: SSH Key
-
-Selecciona:
-
-👉 Generate a key pair for me
-
-Descarga
-
-👉 Haz clic en:
-
-Download Private Key
-
-Guárdala en tu PC.
-
-⚠️ Sin esto NO podrás conectarte.
-
-🌐 Networking
-Subnet: Public
-Public IP: Sí
-NSG: NSG-VM-Web
-🧭 Crear
-
-👉 Click en Create
-
-🧭 Conectarse
+```
 ssh -i tu_llave.key opc@IP_PUBLICA
-8️⃣ Apache – Publicar web
-Instalar
+```
+
+---
+
+# 6️⃣ Apache
+
+## 🎯 ¿Qué vamos a hacer?
+
+Convertir la VM en servidor web.
+
+```
 sudo dnf install -y httpd
 sudo systemctl enable --now httpd
-Crear página
-sudo tee /var/www/html/index.html
-Validar
+```
 
-👉 http://IP_PUBLICA_VM
+---
 
-9️⃣ Load Balancer
-🎯 ¿Qué vamos a hacer?
+# 7️⃣ Load Balancer
 
-Exponer la app como en producción.
+## 🎯 ¿Qué vamos a hacer?
 
-🧭 Paso a paso
-Networking → Load Balancers
-Create
-Configurar
-Backend → VM privada
-Listener → HTTP 80
-NSG → NSG-LB
-✅ Validación final
+Publicar la aplicación.
 
-👉 http://IP_LOAD_BALANCER
+- Backend → VM  
+- Listener → HTTP 80  
 
-🎓 Resultado final
+---
 
-✔ Red completa
-✔ VM funcionando
-✔ Web publicada
-✔ Load Balancer activo
+# 🎓 Resultado final
 
-🚀 Cierre
-
-Este laboratorio simula un escenario real de despliegue en la nube.
+✔ VCN  
+✔ VM  
+✔ Web  
+✔ Load Balancer  

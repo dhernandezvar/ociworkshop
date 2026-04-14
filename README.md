@@ -236,7 +236,9 @@ sudo nano /var/www/html/index.html
 ```
 sudo systemctl restart httpd
 ```
-11. Finalmente, volvemos a acceder desde el navegador a la siguiente URL: http://ippublicadetuvm
+11. Finalmente, volvemos a acceder desde el navegador a la siguiente URL: http://ippublicadetuvm. Se vería algo así:
+<img width="346" height="86" alt="image" src="https://github.com/user-attachments/assets/dc14613b-055b-4fd0-b84a-0007899f52a4" />
+
 ---
 
 # 7️⃣ Load Balancer

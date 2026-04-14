@@ -147,25 +147,41 @@ Crear una VM Linux y conectarnos a ella.
 4. Compartimento: TuNombre-OCI
 5. Availability Domain: Déjalo por defecto
 6. Operating System: Oracle Linux 9
-7. En Shape, cámbiala a: AMD,
-8. <img width="669" height="270" alt="image" src="https://github.com/user-attachments/assets/eddf0b3c-f3aa-45f5-bbb6-7db3f2e2ac60" />
-  
-
-## 🔐 SSH
-
-Generate a key pair for me  
-
-Descargar llave privada  
-
-## Conexión
-
+7. En Shape, cámbiala a AMD con las siguientes características: 
+<img width="752" height="315" alt="image" src="https://github.com/user-attachments/assets/1ff335a8-796c-4fdb-9cdc-f2604aef9b19" />
+8. Click en Select Shape
+9. De vuelta a la pantalla principal, click en Next
+10. Deja Security Options por default y click en Next
+11. En Networing utiliza los siguientes valores:
+    - VNIC Name: TuNombre-VNIC
+    - Primary NetworK: Select Existing Network
+    - Compartment VNC:  TuNombre-OCI
+    - VCN: VCN-TuNombre
+    - Compartment Subnet: TuNombre-OCI
+    - Subnet: public-subnet-VCN-TuNombre
+     🔐 En Advanced Options:
+    - Generate a Key Pair for Me
+    - Click en Download private Key
+    - Click en Download public Key
+    - Guarda las llaves en una carpeta de fácil acceso. La llave privada será requerida para conectarnos a la VM posteriormente.
+    - Click Next
+12. En Storage ubica el Boot Volume y cambia el selector "Specify a custom boot volume size and performance setting". Coloca 100 GB en el campo Boot Volume Size.
+13. Click en Next.
+14. Valida la información que se indica en Review.
+15. Cuando estés listo, click en Create para el inicio de la creación de la VM
+    
+ 
+## Conexión Segura 🔐
+Una vez que el job de creación indique el status running, ubica tu VM en:
+1. Menú ☰ → Compute → Instances (siempre bajo tu compartment TuNombre-OCI)
+2. En pantalla aparecerán las direcciones pública y privada de tu VM. Toma la pública para conectarnos.
+3. En tu PC Windows, abre un CMD (o cualquier otra terminal que te permita acceso SSH de forma remota.
+4. Desde el terminal, ejecuta el siguiente comando:
 ```
 ssh -i tu_llave.key opc@IP_PUBLICA
-```
-
 ---
 
-# 6️⃣ Apache
+# 6️⃣ Instalación de tu primar aplicación utilizando Apache Server
 
 ## 🎯 ¿Qué vamos a hacer?
 

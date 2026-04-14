@@ -77,7 +77,8 @@ Crear tu propio espacio de trabajo aislado.
 5. Parent: Workshop-OCI  
 6. Create
 7. Ingresar al compartment Workshop-OCI
-8. Validar que exista el nuevo compartment TuNombre-OCI  
+8. Validar que exista el nuevo compartment TuNombre-OCI en la sección Child Compartments
+9. Refrescar la pantalla para que cargue la nueva estructura de compartments 
 
 ---
 
@@ -96,10 +97,19 @@ Crear la red base donde vivirán todos los recursos.
 
 ### Configuración
 
+Solamente coloca los siguientes datos (el resto déjalos igual):
+
 - Name: VCN-TuNombre  
 - CIDR: 10.0.0.0/16  
 
-Click Create  
+Click Next
+Aparecerá una pantalla con la previsualización de las configuraciones de la VCN (toma un tiempo para revisarlas)
+Click Create
+
+Una vez creada, explora la nueva VCN para revisar los recursos creados:
+- Subnets
+- Gateways
+- Security Lists
 
 ---
 
@@ -111,9 +121,15 @@ Controlar acceso a la VM.
 
 ## 🔐 ACL (SSH)
 
-1. Menú ☰ → Networking → Virtual Cloud Networks →  
-- Source: TU_IP/32  
-- Port: 22   
+1. Valida la IP desde que estás conectado en el siguiente enlace: https://whatismyipaddress.com/. Guarda la IP que te aparece en pantalla.
+2. Menú ☰ → Networking → Virtual Cloud Networks →  VNC-TuNombre → Security → "Default Security List for VCN-TuNombre"
+3. Click en Security Rules
+4. En la sección Ingress Rules, agrega una regla 
+- Source CIDR: TU_IP/32  
+- Port: 22,80
+5. Click en Add Ingress Rule
+6. Revisa que las reglas de ingreso hayan sido creadas
+7. Ubica la regla que tiene Source CIDR 0.0.0.0/0 y puerto 22, márcala y en el botón de "..." click en "remove". Con esto te asegurarás que solamente desde tu propia IP podrás conectarte a la VM que crearás posteriormente.   
 
 ---
 
@@ -126,7 +142,14 @@ Crear una VM Linux y conectarnos a ella.
 ## 🧭 Pasos
 
 1. Menú ☰ → Compute → Instances  
-2. Click Create Instance  
+2. Click Create Instance
+3. Nombre de la VM: VM-TuNombre
+4. Compartimento: TuNombre-OCI
+5. Availability Domain: Déjalo por defecto
+6. Operating System: Oracle Linux 9
+7. En Shape, cámbiala a: AMD,
+8. <img width="669" height="270" alt="image" src="https://github.com/user-attachments/assets/eddf0b3c-f3aa-45f5-bbb6-7db3f2e2ac60" />
+  
 
 ## 🔐 SSH
 

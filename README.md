@@ -180,6 +180,7 @@ Una vez que el job de creación indique el status running, ubica tu VM en:
 4. Con el siguiente comando Windows, quitaremos los permisos heredados de tu llave privada:
 ```
 icacls "D:\Temp\TuLlave.key" /inheritance:r
+```
 6. Con el siguiente comando Windows, agregaremos el permiso para que solo tu usuario pueda leer la llave:
 ```
 "D:\Temp\TuLlave.key" /grant:r "%USERNAME%":F

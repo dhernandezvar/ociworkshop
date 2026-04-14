@@ -149,6 +149,7 @@ Crear una VM Linux y conectarnos a ella.
 6. Operating System: Oracle Linux 9
 7. En Shape, cámbiala a AMD con las siguientes características: 
 <img width="752" height="315" alt="image" src="https://github.com/user-attachments/assets/1ff335a8-796c-4fdb-9cdc-f2604aef9b19" />
+
 8. Click en Select Shape
 9. De vuelta a la pantalla principal, click en Next
 10. Deja Security Options por default y click en Next

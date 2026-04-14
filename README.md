@@ -72,9 +72,12 @@ Crear tu propio espacio de trabajo aislado.
 
 1. Menú ☰ → Identity & Security → Compartments  
 2. Click Create Compartment  
-3. Name: TuNombre-OCI  
-4. Parent: Workshop-OCI  
-5. Create  
+3. Name: TuNombre-OCI
+4. Descripción: Compartimento para Laboratorio  
+5. Parent: Workshop-OCI  
+6. Create
+7. Ingresar al compartment Workshop-OCI
+8. Validar que exista el nuevo compartment TuNombre-OCI  
 
 ---
 
@@ -108,13 +111,9 @@ Controlar acceso a la VM.
 
 ## 🔐 ACL (SSH)
 
+1. Menú ☰ → Networking → Virtual Cloud Networks →  
 - Source: TU_IP/32  
-- Port: 22  
-
-## 🔐 NSG
-
-- NSG-VM-Web → HTTP desde LB  
-- NSG-LB → HTTP público  
+- Port: 22   
 
 ---
 

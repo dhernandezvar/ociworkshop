@@ -188,11 +188,11 @@ icacls "D:\Temp\TuLlave.key" /inheritance:r
 7. Desde el terminal, ejecuta el siguiente comando:
 ```
 ssh -i tu_llave.key opc@IP_PUBLICA
-
+```
 8. En tu VM, ejecuta el siguiente comando para validar que estás en tu VM Creada en OCI, esto retornará el nombe de la VNIC
 ```
 hostname
-
+```
 # 6️⃣ Instalación de tu primar aplicación utilizando Apache Server
 
 ## 🎯 ¿Qué vamos a hacer?

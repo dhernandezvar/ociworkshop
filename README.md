@@ -213,6 +213,30 @@ sudo systemctl enable --now httpd
 
 <img width="953" height="394" alt="image" src="https://github.com/user-attachments/assets/f0d417a3-cec0-427a-ab0e-643b40093975" />
 
+4. Crear un página personalizada:
+```
+sudo nano /var/www/html/index.html
+```
+5. Ahora, dentro del archivo, colocamos el siguiente código HTML:
+```
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mi Primera Página Web</title>
+</head>
+<body>
+    <h1>Mi Primera Página Web</h1>
+    <p>Esta es una página dummy de prueba.</p>
+</body>
+</html>
+```
+8. Para grabar el resultado, presionamos "Ctrl + O" + Enter.
+9. Para salir de Nano, presionamos "Ctrl + X"
+10. Finalmente reiniciamos el servicio de Apache Server 
+```
+sudo systemctl restart httpd
+```
+11. Finalmente, volvemos a acceder desde el navegador a la siguiente URL: http://ippublicadetuvm
 ---
 
 # 7️⃣ Load Balancer

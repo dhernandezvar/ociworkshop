@@ -219,16 +219,125 @@ sudo systemctl enable --now httpd
 
 ## 🎯 ¿Qué vamos a hacer?
 
-Publicar la aplicación.
+En esta parte vamos a publicar nuestra aplicación detrás de un **Load Balancer público**.
 
-- Backend → VM  
-- Listener → HTTP 80  
+Hasta ahora ya tienes una VM con Apache funcionando. Sin embargo, en una arquitectura real no se expone directamente el servidor a internet. En su lugar, se utiliza un **Load Balancer** como punto de entrada para recibir el tráfico de los usuarios y enviarlo al servidor que ejecuta la aplicación.
+
+Durante este paso vamos a:
+
+- Crear un **Load Balancer público**
+- Definir un **backend** (nuestra VM)
+- Crear un **listener HTTP en el puerto 80**
+
+👉 Al final, ya no accederás a la VM directamente, sino a través del Load Balancer.
 
 ---
 
-# 🎓 Resultado final
+## 🧭 Paso a paso
 
-✔ VCN  
-✔ VM  
-✔ Web  
-✔ Load Balancer  
+### Ir al servicio de Load Balancers
+
+1. Abre el menú principal (☰)
+2. Da clic en:  
+   **Networking → Load Balancers → Load Balancer**
+
+👉 Aquí verás la lista de balanceadores (probablemente vacía).
+
+---
+
+### Verificar el compartment
+
+Antes de continuar, valida en la parte superior tu compartimento:
+
+```
+Workshop-OCI / TuNombre-OCI
+```
+
+🔴 Es importante que el Load Balancer se cree en el mismo compartment que la VCN y la VM.
+
+---
+
+### Crear el Load Balancer
+
+Da clic en: **Create Load Balancer**
+
+👉 Esto permitirá acceso desde internet.
+
+---
+
+### Configuración básica
+
+Completa los campos:
+
+- **Name**: `lb-web`
+- **Visibility**: Public
+- **Assign Public IP Address**: Ephimeral
+
+### Seleccionar red
+
+- **VCN**: `VCN-TuNombre`
+- **Subnet**: **Public Subnet**
+
+👉 El Load Balancer debe estar en la subnet pública para recibir tráfico externo.
+
+---
+### Bandwith, Security,Acceleration y Management
+
+👉 Deja los valores por defecto y click en Next
+
+---
+### Crear el Backend Set
+
+- **Specify a load balancing policy:** Weighted Round Robin
+
+---
+
+### Agregar la VM como backend
+
+1. En la sección "Select backend servers", haz clic en **Add Backend**
+2. Selecciona tu VM y click en **Add Instances**
+3. Cuando regresas al flujo principal de creación del Load Balancer, en la instancia agregada valida que el puerto configurado por defecto sea 80
+4. En el campo "Specify health check policy", revisa que el protocolo sea HTTP y puerto 80. El resto de valores déjalos sin cambios.
+5. Click en Next
+
+---
+
+### Configuración del Listener
+
+1. Haz clic en **Create Listener**
+
+Configura:
+
+- **Tipo de Protocolo:** HTTP
+- **Puerto:** 80
+
+El resto de los valores déjalos por defecto y click en Next
+
+---
+### Manage logging
+
+Revisa los valores definidos por defecto y click en Next
+
+---
+### Review and Create
+
+👉 Revisa de nuevo los valores definidos y haz clic en **Create** y espera a que esté ACTIVE y "Overall health" en el Balanceador esté .
+
+---
+
+### Validar que esté funcionando:
+
+Abre en tu navegador:
+
+```
+http://IP_PUBLICA_DEL_LOAD_BALANCER
+```
+
+---
+
+## ✅ Resultado esperado
+
+Debes ver:
+
+La página inicial de Apache Server
+  

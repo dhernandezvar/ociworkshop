@@ -1,291 +1,301 @@
 # ociworkshop
-Laboratorio exploratorio para fundamentos de OCi
-
-🧑‍💻 Oracle Cloud Infrastructure (OCI) Workshop
-Fundamentos – Laboratorio práctico (3 horas)
+🧑‍💻 OCI Workshop Lab – Fundamentos (3 horas)
 🎯 Objetivo del laboratorio
 
-En este laboratorio vas a construir una arquitectura real en OCI paso a paso, entendiendo no solo cómo, sino por qué se hace cada cosa.
+En este laboratorio vas a construir una arquitectura completa en Oracle Cloud Infrastructure (OCI) paso a paso, como si estuvieras en un entorno real de trabajo.
 
-Al finalizar podrás:
+No solo vas a crear recursos, sino que vas a entender:
 
-Entender cómo OCI gestiona identidad y acceso (IAM)
-Organizar recursos correctamente usando compartments
-Crear una red funcional en la nube
-Desplegar una VM accesible desde internet
-Publicar una aplicación web
-Exponerla de forma profesional con un Load Balancer
-🧱 ¿Qué vamos a construir?
+qué estás haciendo
+por qué lo estás haciendo
+qué resultado debes ver en cada paso
+🧱 Arquitectura que vas a construir
+Internet
+   │
+   ▼
+Load Balancer (Public)
+   │
+   ▼
+VM (Apache Web Server)
+   │
+   ▼
+VCN (10.0.0.0/16)
+ ├── Public Subnet
+ └── Private Subnet
+⚠️ REGLA MÁS IMPORTANTE DEL LAB
 
-Durante el laboratorio vas a desplegar:
+Antes de hacer cualquier acción, revisa esto:
 
-Una red (VCN) con subnets pública y privada
-Una máquina virtual Linux (servidor web)
-Un Load Balancer público
-Configuración de seguridad:
-SSH → Security List (ACL)
-HTTP → NSG
-⚠️ Regla principal del laboratorio
+👉 En la parte superior de la consola debe decir:
 
-🔴 Todo debe crearse dentro de tu compartment:
+Workshop-OCI / TuNombre-OCI
 
-Root
-└── Workshop-OCI
-    └── TuNombre-OCI
+🔴 Si esto está mal, TODO lo que crees quedará en el lugar incorrecto.
 
-👉 Esto evita conflictos entre estudiantes.
+1️⃣ IAM – Entendiendo quién puede acceder
+🎯 ¿Qué vamos a hacer aquí?
 
-1️⃣ IAM – Entendiendo cómo OCI gestiona usuarios
-🎯 ¿Qué vamos a hacer?
+Antes de crear recursos, necesitamos entender quién tiene acceso al entorno.
 
-Antes de crear recursos, vamos a entender cómo OCI controla el acceso:
+Aquí no vas a crear nada — solo observar.
 
-Quién puede entrar (usuarios)
-Cómo se agrupan (grupos)
-Cómo se asignan permisos
-🔍 Exploración de Identity Domains
-🧭 Paso a paso
-Abre el menú ☰
-Ve a:
-👉 Identity & Security → Domains
-Abre:
+🧭 Paso 1: Entrar al Identity Domain
+En la esquina superior izquierda, haz clic en el menú ☰
+En el menú que aparece, busca la sección:
+👉 Identity & Security
+Da clic en:
+👉 Domains
+
+Ahora verás una lista de dominios.
+
+Haz clic en:
 👉 Default Domain
-👤 Usuarios
+👤 Paso 2: Ver usuarios
+En el menú izquierdo del dominio, busca:
+👉 User Management
+Da clic en:
+👉 Users
 
-👉 Ve a: User Management → Users
+🔍 Aquí estás viendo:
 
-Aquí verás:
-
-Todos los usuarios del entorno
+Todos los usuarios que pueden entrar a OCI
 Tu propio usuario
 
-👉 Esto representa las identidades que pueden acceder a OCI.
+👉 Busca tu nombre en la lista.
 
-👥 Grupos
+👥 Paso 3: Ver grupos
+En el mismo menú izquierdo:
+👉 Da clic en Groups
 
-👉 Ve a: User Management → Groups
+🔍 Aquí estás viendo:
 
-👉 Los grupos sirven para asignar permisos de forma escalable.
+Grupos de usuarios
+Cómo se organizan los permisos
+🔗 Paso 4: Ver a qué grupo perteneces
+Regresa a: Users
+Haz clic en tu usuario
+Busca la sección:
+👉 Groups
 
-🔗 Relación usuario-grupo
-Regresa a Users
-Abre tu usuario
-Revisa la sección Groups
+👉 Aquí puedes ver qué permisos tienes indirectamente.
 
-👉 Esto te permite ver qué permisos heredas.
-
-📁 Crear tu espacio de trabajo (Compartment)
+2️⃣ Crear tu espacio de trabajo (Compartment)
 🎯 ¿Qué vamos a hacer?
 
-Crear tu propio “sandbox” dentro de OCI.
+Crear tu propio “espacio aislado” donde trabajarás todo el laboratorio.
 
-👉 Aquí vivirán TODOS tus recursos.
+🧭 Paso a paso
+Abre el menú ☰
+Da clic en:
+👉 Identity & Security → Compartments
+
+Verás la lista de compartments existentes.
+
+Haz clic en el botón:
+👉 Create Compartment
+📝 Completa la información
+Name: TuNombre-OCI
+Parent Compartment: selecciona Workshop-OCI
+
+👉 Este punto es clave: asegúrate de NO dejar Root.
+
+Haz clic en:
+👉 Create
+✅ Qué debes ver
+
+Tu estructura debe quedar así:
+
+Root
+ └── Workshop-OCI
+      └── TuNombre-OCI
+3️⃣ Seguridad – Cómo se protege el acceso
+🎯 ¿Qué vamos a hacer?
+
+Entender cómo OCI protege el acceso:
+
+contraseñas
+autenticación multifactor
+🔑 Password Policy
+Regresa a:
+👉 Identity & Security → Domains
+Abre: Default Domain
+En el menú izquierdo:
+👉 Domain Policies → Password Policy
+
+🔍 Observa:
+
+longitud mínima
+complejidad
+expiración
+🔐 MFA (Dominio)
+
+👉 En el menú izquierdo:
+👉 Authentication
+
+👤 MFA (Tu usuario)
+Menú ☰
+👉 Identity & Security → My Profile
+Da clic en:
+👉 Security
+4️⃣ Cost Analysis
+🎯 ¿Qué vamos a hacer?
+
+Ver cómo OCI muestra el consumo de recursos.
 
 🧭 Paso a paso
 Menú ☰
-👉 Identity & Security → Compartments
-👉 Create Compartment
-Configuración
-Name: TuNombre-OCI
-Parent: Workshop-OCI
-💡 Qué debes entender
-
-Un compartment es como una carpeta lógica donde organizas y aíslas recursos.
-
-2️⃣ Seguridad – Cómo se protege el acceso
-🎯 ¿Qué vamos a hacer?
-
-Vamos a revisar cómo OCI asegura el acceso mediante:
-
-Políticas de contraseña
-Autenticación multifactor (MFA)
-🔑 Password Policy
-
-👉 Ruta:
-Domains → Default Domain → Domain Policies → Password Policy
-
-Qué observar
-Longitud mínima
-Complejidad
-Expiración
-
-👉 Esto define qué tan seguras deben ser las contraseñas.
-
-🔐 MFA (Autenticación)
-
-👉 Ruta:
-Domains → Default Domain → Authentication
-
-👉 Aquí se definen los métodos de autenticación.
-
-👤 MFA en tu usuario
-
-👉 Ruta:
-Identity & Security → My Profile → Security
-
-👉 Aquí ves TU configuración personal.
-
-3️⃣ Cost Analysis – Entendiendo el consumo
-🎯 ¿Qué vamos a hacer?
-
-Aprender cómo OCI muestra el consumo de recursos.
-
-🧭 Paso a paso
-
 👉 Billing & Cost Management → Cost Analysis
+Configura
+Compartment: Workshop-OCI
+Periodo: This Month
+🔍 Qué observar
 
-Qué analizar
-Agrupa por servicio
-Agrupa por compartment
+Cambia las vistas y analiza:
 
-👉 Esto te permite identificar qué recursos generan costo.
-
-4️⃣ Red – Construyendo la base de todo
+qué servicios aparecen
+si hay consumo
+5️⃣ Red – Crear la VCN
 🎯 ¿Qué vamos a hacer?
 
-Crear una red completa donde vivirán tus recursos.
+Crear la red donde vivirán todos los recursos.
 
-👉 Esto incluye:
+🔴 Paso 1: Verificar compartment
 
-VCN
-Subnets
-Gateways
-🌐 Crear VCN
-🧭 Paso a paso
+👉 Debe decir:
+
+Workshop-OCI / TuNombre-OCI
+🧭 Paso 2: Ir a networking
 Menú ☰
 👉 Networking → Virtual Cloud Networks
-Da clic en:
-👉 Actions → Start VCN Wizard
-Selección
+🧭 Paso 3: Iniciar wizard
+Busca el botón:
+👉 Actions
+Da clic
+Selecciona:
+👉 Start VCN Wizard
+🧭 Paso 4: Seleccionar tipo
+
+Selecciona:
 
 👉 VCN with Internet Connectivity
 
-💡 Qué hace el wizard
+👉 Da clic en Start
 
-Crea automáticamente:
-
-Subnet pública (internet)
-Subnet privada (interna)
-Internet Gateway
-NAT Gateway
-Service Gateway
-Configuración
+🧭 Paso 5: Configurar
 Name: VCN-TuNombre
 CIDR: 10.0.0.0/16
-🔐 Seguridad de red
-🔑 ACL (Security List) – SSH
+
+👉 Deja todo lo demás por defecto
+
+🧭 Paso 6: Crear
+
+👉 Haz clic en Create
+
+⏳ Espera a que termine
+
+🔐 6️⃣ Seguridad de red
 🎯 ¿Qué vamos a hacer?
 
-Permitir acceso SSH solo desde tu computadora.
+Configurar quién puede entrar a la VM.
 
-🧭 Paso a paso
-VCN → Subnets
+🔑 ACL (Security List) – SSH
+
+👉 Permitir acceso solo desde tu PC
+
+Paso a paso
+Entra a tu VCN
+Da clic en:
+👉 Subnets
 Selecciona Public Subnet
-Abre Security List
-Add Ingress Rule
-Configuración
+Baja hasta:
+👉 Security Lists
+Da clic en la lista
+Da clic en:
+👉 Add Ingress Rule
+Configura
 Source: tu IP /32
 Port: 22
-💡 Qué logramos
-
-👉 Solo tú puedes entrar por SSH
-
 🌐 NSG – HTTP
+
+👉 Controlar acceso web
+
+Crear NSG-VM-Web
+VCN → Network Security Groups
+Create
+Regla
+Source: NSG-LB
+Port: 80
+Crear NSG-LB
+Source: 0.0.0.0/0
+Port: 80
+7️⃣ VM – Crear servidor
 🎯 ¿Qué vamos a hacer?
 
-Permitir tráfico web de forma controlada.
+Crear una VM y conectarnos a ella.
 
-NSG-VM-Web
+🧭 Paso a paso
+Menú ☰
+👉 Compute → Instances
+👉 Create Instance
+🔐 Paso crítico: SSH Key
 
-👉 Permite tráfico HTTP solo desde el Load Balancer
+Selecciona:
 
-NSG-LB
+👉 Generate a key pair for me
 
-👉 Permite tráfico HTTP desde internet
+Descarga
 
-💡 Qué logramos
-Seguridad en capas
-Separación de responsabilidades
-5️⃣ VM – Creando el servidor web
-🎯 ¿Qué vamos a hacer?
+👉 Haz clic en:
 
-Crear una máquina virtual Linux que actuará como servidor web.
+Download Private Key
 
-🧭 Creación
+Guárdala en tu PC.
 
-👉 Compute → Instances → Create Instance
-
-🔐 SSH Key (CRÍTICO)
-
-👉 Selecciona:
-
-Generate a key pair for me
-
-💡 Qué significa esto
-
-OCI generará:
-
-🔑 Llave privada (tu acceso)
-🔓 Llave pública (en la VM)
-⚠️ IMPORTANTE
-
-👉 Descarga la llave privada
-👉 Guárdala en tu PC
-
-Sin esto NO podrás conectarte
+⚠️ Sin esto NO podrás conectarte.
 
 🌐 Networking
 Subnet: Public
 Public IP: Sí
 NSG: NSG-VM-Web
-🧭 Conexión
-ssh -i llave.key opc@IP_PUBLICA
-🌐 Apache – Publicando tu web
-🎯 ¿Qué vamos a hacer?
+🧭 Crear
 
-Convertir la VM en un servidor web.
+👉 Click en Create
 
-Instalación
+🧭 Conectarse
+ssh -i tu_llave.key opc@IP_PUBLICA
+8️⃣ Apache – Publicar web
+Instalar
 sudo dnf install -y httpd
 sudo systemctl enable --now httpd
-Página
+Crear página
 sudo tee /var/www/html/index.html
-Validación
+Validar
 
 👉 http://IP_PUBLICA_VM
 
-6️⃣ Load Balancer – Publicación profesional
+9️⃣ Load Balancer
 🎯 ¿Qué vamos a hacer?
 
-Exponer tu aplicación mediante un punto único de acceso.
+Exponer la app como en producción.
 
-Creación
-
-👉 Networking → Load Balancers → Create
-
-Concepto clave
-
-El LB:
-
-Recibe tráfico
-Lo distribuye a la VM
-Configuración
+🧭 Paso a paso
+Networking → Load Balancers
+Create
+Configurar
 Backend → VM privada
 Listener → HTTP 80
 NSG → NSG-LB
-Validación
+✅ Validación final
 
 👉 http://IP_LOAD_BALANCER
 
 🎓 Resultado final
 
-Has construido:
+✔ Red completa
+✔ VM funcionando
+✔ Web publicada
+✔ Load Balancer activo
 
-Red completa
-Seguridad correcta
-VM funcional
-Web publicada
-Load Balancer activo
 🚀 Cierre
 
-Este laboratorio representa la base de cualquier arquitectura en OCI.
+Este laboratorio simula un escenario real de despliegue en la nube.

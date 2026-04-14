@@ -1,5 +1,6 @@
-# ociworkshop
-🧑‍💻 OCI Workshop Lab – Fundamentos (3 horas)
+# OCI Workshop Lab – Fundamentos
+🧑‍💻 Tiempo Estimado: 3 horas
+
 🎯 Objetivo del laboratorio
 
 En este laboratorio vas a construir una arquitectura completa en Oracle Cloud Infrastructure (OCI) paso a paso, como si estuvieras en un entorno real de trabajo.
@@ -9,6 +10,7 @@ No solo vas a crear recursos, sino que vas a entender:
 qué estás haciendo
 por qué lo estás haciendo
 qué resultado debes ver en cada paso
+
 🧱 Arquitectura que vas a construir
 Internet
    │
@@ -22,15 +24,15 @@ VM (Apache Web Server)
 VCN (10.0.0.0/16)
  ├── Public Subnet
  └── Private Subnet
+ 
 ⚠️ REGLA MÁS IMPORTANTE DEL LAB
 
 Antes de hacer cualquier acción, revisa esto:
-
 👉 En la parte superior de la consola debe decir:
-
 Workshop-OCI / TuNombre-OCI
 
 🔴 Si esto está mal, TODO lo que crees quedará en el lugar incorrecto.
+
 
 1️⃣ IAM – Entendiendo quién puede acceder
 🎯 ¿Qué vamos a hacer aquí?

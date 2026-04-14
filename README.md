@@ -199,10 +199,19 @@ hostname
 
 Convertir la VM en servidor web.
 
+1. Dentro de la terminal conectada a tu vm, vamos a agregar el puerto de acceso de forma permanente en el firewalld interno: 
+```
+sudo firewall-cmd --permanent --add-service=http
+sudo firewall-cmd --reload
+```
+2. Ahora procederemos con la instalación del Apache Server
 ```
 sudo dnf install -y httpd
 sudo systemctl enable --now httpd
 ```
+3. Para comprobar que el Apache quedó funcionando, deberías poder acceder desde tu navegador con el siguiente enlace: http://ippublicadetuvm. Se vería lo siguiente:
+
+<img width="953" height="394" alt="image" src="https://github.com/user-attachments/assets/f0d417a3-cec0-427a-ab0e-643b40093975" />
 
 ---
 

@@ -297,8 +297,9 @@ Completa los campos:
 1. En la sección "Select backend servers", haz clic en **Add Backend**
 2. Selecciona tu VM y click en **Add Instances**
 3. Cuando regresas al flujo principal de creación del Load Balancer, en la instancia agregada valida que el puerto configurado por defecto sea 80
-4. En el campo "Specify health check policy", revisa que el protocolo sea HTTP y puerto 80. El resto de valores déjalos sin cambios.
-5. Click en Next
+4. En el campo "Specify health check policy", revisa que el protocolo coloca TCP y puerto 80.
+5. El resto de valores déjalos sin cambios.
+6. Click en Next
 
 ---
 

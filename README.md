@@ -180,19 +180,15 @@ Una vez que el job de creación indique el status running, ubica tu VM en:
 4. Con el siguiente comando Windows, quitaremos los permisos heredados de tu llave privada:
 ```
 icacls "D:\Temp\TuLlave.key" /inheritance:r
----
 6. Con el siguiente comando Windows, agregaremos el permiso para que solo tu usuario pueda leer la llave:
 ```
 "D:\Temp\TuLlave.key" /grant:r "%USERNAME%":F
----
 7. Desde el terminal, ejecuta el siguiente comando:
 ```
 ssh -i tu_llave.key opc@IP_PUBLICA
----
 8. En tu VM, ejecuta el siguiente comando para validar que estás en tu VM Creada en OCI, esto retornará el nombe de la VNIC
 ```
 hostname
----
 
 # 6️⃣ Instalación de tu primar aplicación utilizando Apache Server
 

@@ -183,7 +183,7 @@ icacls "D:\Temp\TuLlave.key" /inheritance:r
 ```
 6. Con el siguiente comando Windows, agregaremos el permiso para que solo tu usuario pueda leer la llave:
 ```
-"D:\Temp\TuLlave.key" /grant:r "%USERNAME%":F
+icacls "D:\Temp\TuLlave.key" /grant:r "%USERNAME%":F
 ```
 7. Desde el terminal, ejecuta el siguiente comando:
 ```
